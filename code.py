@@ -13,7 +13,7 @@ sequence = [possibleValues[random.randint(0, 3)], possibleValues[random.randint(
 
 #   Instantiate buffer and "alternate" variable
 buffer = []
-alternate = 0
+alternate = 1
 
 #   Button press function
 def button_pressed(row, col, value):
