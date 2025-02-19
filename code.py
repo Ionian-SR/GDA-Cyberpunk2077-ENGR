@@ -4,11 +4,14 @@ from time import sleep
 from tqdm import tqdm
 import sys
 
-#   Instantiate the sequence
+#   Possible values
 possibleValues = ["E9", "1C", "55", "BD"]
+
 #   Randomized sequence
 #   HARDCODED TO BE LENGTH OF 3
 sequence = [possibleValues[random.randint(0, 3)], possibleValues[random.randint(0, 3)], possibleValues[random.randint(0, 3)]]
+
+#   Instantiate buffer and "alternate" variable
 buffer = []
 alternate = 0
 
@@ -17,11 +20,15 @@ def button_pressed(row, col, value):
     #   Increment alternate global var to decide if row or column to enable.
     global alternate
     alternate = alternate + 1
+    
     #   Append value to buffer
     buffer.append(value)
-    #   Print current bufferer
+    
+    #   Print current buffer
+    #   The sys.stdout with flush allows the text to overwrite itself in the terminal.
     sys.stdout.write(f"\rCURRENT BUFFER: {buffer}")
     sys.stdout.flush()
+    
     #   Once buffer length matches sequence length,
     if len(buffer) >= len(sequence):
         print("\n\n========================================")
@@ -41,7 +48,7 @@ def button_pressed(row, col, value):
         for c in range(5):
             buttons[r][c]["state"] = "disabled"
 
-    #   Alternate row and column puzzle sequence
+    #   Alternate row and column buttons to be enabled
     if alternate % 2 == 0:
         for i in range(5):
             buttons[i][col]["state"] = "normal"  # Enable same column
@@ -49,7 +56,7 @@ def button_pressed(row, col, value):
         for i in range(5):
             buttons[row][i]["state"] = "normal"  # Enable same row
 
-#   Create main window
+#   Create main window and set some basic aspects
 root = tk.Tk()
 root.geometry("640x360")
 root.title("CODE MATRIX")
@@ -69,8 +76,8 @@ for r in range(5):
     for c in range(5):
         randomNumber = random.randint(0, 3)
         '''   
-            Create a button in root, with the text as the randomNumber. command = lambda to capture the r, c, and randomNumber
-            at the time of the instatiation of the button, rather at the end. Attach a button_pressed() function with button press.
+            Create a button in root, with the text as a random value from possibleValues list. command = lambda to capture the r, c, and random value
+            at the time of the instantiation of the button, rather at the end of the program. Attach a button_pressed() function with button press.
         '''
         btn = tk.Button(root, text=possibleValues[randomNumber], command=lambda r=r, c=c , value=possibleValues[randomNumber]: button_pressed(r, c, value))
         #   Places the button in the grid, with a 5 pixel space between buttons. NSEW allows buttons to stretch when resized.
@@ -80,7 +87,6 @@ for r in range(5):
     #   When finished with row_button list, append the list to buttons list.
     buttons.append(row_buttons)
 
-
+#   Begin of root program and initial title
 print("SEQUENCE REQUIRED TO UPLOAD:", sequence, "\n")
-# Initially, all buttons are enabled
 root.mainloop()
