@@ -86,6 +86,23 @@ for r in range(5):
         row_buttons.append(btn)
     #   When finished with row_button list, append the list to buttons list.
     buttons.append(row_buttons)
+    
+#   Updates button's values at this location
+def updateButton(row, col, value):
+    buttons[row][col].config(text=value, command=lambda r=row, c=col, val=value: button_pressed(r, c, val))   
+
+#   ANSWER GENERATION
+#   HARDCODED TO LENGTH OF 3
+r1Row = random.randint(0, 4)
+r1Col = random.randint(0, 4)
+updateButton(r1Row, r1Col, sequence[0])
+#print(r1Row, r1Col)
+r2Row = random.randint(0, 4)
+updateButton(r2Row, r1Col, sequence[1])
+#print(r2Row, r1Col)
+r2Col = random.randint(0, 4)
+updateButton(r2Row, r2Col, sequence[2])
+#print(r2Row, r2Col)
 
 #   Begin of root program and initial title
 print("SEQUENCE REQUIRED TO UPLOAD:", sequence, "\n")
